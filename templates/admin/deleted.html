@@ -1,0 +1,43 @@
+{{define "content"}}
+<div class="box">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/admin">Admin</a></li>
+            <li class="is-active"><a href="#" aria-current="page">Deleted Pages</a></li>
+        </ul>
+    </nav>
+
+    <h1 class="title">Deleted Pages</h1>
+    <p class="subtitle has-text-grey">Pages that have been soft-deleted and can be restored</p>
+
+    {{if .Data.Pages}}
+    <table class="table is-fullwidth is-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Slug</th>
+                <th>Deleted</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Data.Pages}}
+            <tr>
+                <td>{{.Title}}</td>
+                <td><code>{{.Slug}}</code></td>
+                <td>{{.DeletedAt.Format "Jan 2, 2006 3:04 PM"}}</td>
+                <td>
+                    <form method="POST" action="/admin/deleted/{{.ID}}/restore" style="display:inline;">
+                        <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                        <button type="submit" class="button is-small is-success">Restore</button>
+                    </form>
+                </td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+    {{else}}
+    <p class="has-text-grey">No deleted pages.</p>
+    {{end}}
+</div>
+{{end}}

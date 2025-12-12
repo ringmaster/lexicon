@@ -1,0 +1,76 @@
+{{define "layout"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{.Title}} - {{.WikiTitle}}</title>
+    <link rel="stylesheet" href="/static/bulma.min.css">
+    <link rel="stylesheet" href="/static/lexicon.css">
+</head>
+<body>
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item has-text-weight-bold" href="/">{{.WikiTitle}}</a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="navMenu" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="/pages">All Pages</a>
+                    <a class="navbar-item" href="/pages/phantoms">Phantoms</a>
+                    <a class="navbar-item" href="/pages/recent">Recent</a>
+                    <a class="navbar-item" href="/search">Search</a>
+                </div>
+                <div class="navbar-end">
+                    {{if .User}}
+                        {{if .User.IsAdmin}}
+                        <a class="navbar-item" href="/admin">Admin</a>
+                        {{end}}
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">{{.User.Username}}</a>
+                            <div class="navbar-dropdown is-right">
+                                <a class="navbar-item" href="/account/password">Change Password</a>
+                                <hr class="navbar-divider">
+                                <form method="POST" action="/logout">
+                                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                                    <button type="submit" class="navbar-item logout-button">Logout</button>
+                                </form>
+                            </div>
+                        </div>
+                    {{else}}
+                        <div class="navbar-item">
+                            <div class="buttons">
+                                <a class="button is-light" href="/login">Login</a>
+                            </div>
+                        </div>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="section">
+        <div class="container">
+            {{range .Flashes}}
+            <div class="notification is-{{.Type}}">
+                <button class="delete"></button>
+                {{.Message}}
+            </div>
+            {{end}}
+            {{template "content" .}}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>Powered by <strong>Lexicon Wiki</strong></p>
+        </div>
+    </footer>
+</body>
+</html>
+{{end}}

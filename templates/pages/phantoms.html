@@ -1,0 +1,25 @@
+{{define "content"}}
+<div class="box">
+    <h1 class="title">Phantom Pages</h1>
+    <p class="subtitle has-text-grey">Entries that have been cited but not yet written</p>
+
+    {{if .Data.Phantoms}}
+    <div class="content">
+        <ul>
+            {{range .Data.Phantoms}}
+            <li>
+                <a href="/{{.Slug}}" class="wiki-link phantom">{{.Title}}</a>
+                {{if .SourceSlug}}
+                <span class="has-text-grey is-size-7">
+                    — cited in <a href="/{{.SourceSlug}}">{{.SourceTitle}}</a>
+                </span>
+                {{end}}
+            </li>
+            {{end}}
+        </ul>
+    </div>
+    {{else}}
+    <p class="has-text-grey">No phantom pages! All cited entries have been written.</p>
+    {{end}}
+</div>
+{{end}}

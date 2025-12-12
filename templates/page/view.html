@@ -1,0 +1,81 @@
+{{define "content"}}
+<article class="box">
+    <div class="level">
+        <div class="level-left">
+            <div class="level-item">
+                <h1 class="title">{{.Data.Page.Title}}</h1>
+            </div>
+        </div>
+        <div class="level-right">
+            <div class="level-item buttons">
+                {{if .User}}
+                <a href="/{{.Data.Page.Slug}}/edit" class="button is-primary">Edit</a>
+                {{end}}
+                <a href="/{{.Data.Page.Slug}}/history" class="button is-light">
+                    History ({{.Data.RevisionCount}})
+                </a>
+                {{if and .User (eq .User.Role "admin")}}
+                <form method="POST" action="/{{.Data.Page.Slug}}/delete" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this page?');">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <button type="submit" class="button is-danger is-outlined">Delete</button>
+                </form>
+                {{end}}
+            </div>
+        </div>
+    </div>
+
+    <div class="content page-content">
+        {{.Data.Content | safe}}
+    </div>
+
+    <hr>
+
+    <p class="is-size-7 has-text-grey">
+        Last edited by <strong>{{.Data.Revision.AuthorUsername}}</strong>
+        on {{.Data.Revision.CreatedAt.Format "January 2, 2006 at 3:04 PM"}}
+    </p>
+</article>
+
+<section class="box" id="comments">
+    <h2 class="subtitle">Comments ({{len .Data.Comments}})</h2>
+
+    {{if .Data.Comments}}
+    <div class="comments">
+        {{range .Data.Comments}}
+        <article class="media">
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                        <strong>{{.AuthorUsername}}</strong>
+                        <small class="has-text-grey">{{.CreatedAt.Format "Jan 2, 2006 3:04 PM"}}</small>
+                        <br>
+                        {{.Content}}
+                    </p>
+                </div>
+            </div>
+        </article>
+        {{end}}
+    </div>
+    {{else}}
+    <p class="has-text-grey">No comments yet.</p>
+    {{end}}
+
+    {{if .User}}
+    <hr>
+    <form method="POST" action="/{{.Data.Page.Slug}}/comments">
+        <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+        <div class="field">
+            <label class="label">Add a comment</label>
+            <div class="control">
+                <textarea class="textarea" name="content" rows="3" required></textarea>
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <button type="submit" class="button is-primary">Post Comment</button>
+            </div>
+        </div>
+    </form>
+    {{end}}
+</section>
+{{end}}

@@ -1,0 +1,33 @@
+{{define "content"}}
+<div class="box">
+    <h1 class="title">Search</h1>
+
+    <form method="GET" action="/search">
+        <div class="field has-addons">
+            <div class="control is-expanded">
+                <input class="input" type="text" name="q" value="{{.Data.Query}}" placeholder="Search pages..." autofocus>
+            </div>
+            <div class="control">
+                <button type="submit" class="button is-primary">Search</button>
+            </div>
+        </div>
+    </form>
+
+    {{if .Data.Query}}
+    <hr>
+    {{if .Data.Results}}
+    <h2 class="subtitle">Results for "{{.Data.Query}}"</h2>
+    <div class="content">
+        {{range .Data.Results}}
+        <article class="mb-4">
+            <h3><a href="/{{.Slug}}" class="wiki-link">{{.Title}}</a></h3>
+            <p class="has-text-grey">{{.Snippet | safe}}</p>
+        </article>
+        {{end}}
+    </div>
+    {{else}}
+    <p class="has-text-grey">No results found for "{{.Data.Query}}".</p>
+    {{end}}
+    {{end}}
+</div>
+{{end}}

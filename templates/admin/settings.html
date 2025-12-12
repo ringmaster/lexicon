@@ -1,0 +1,60 @@
+{{define "content"}}
+<div class="box">
+    <div class="level">
+        <div class="level-left">
+            <div class="level-item">
+                <h1 class="title">Settings</h1>
+            </div>
+        </div>
+        <div class="level-right">
+            <div class="level-item">
+                <a href="/admin" class="button is-light">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <form method="POST" action="/admin/settings">
+        <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+
+        <div class="field">
+            <label class="label">Wiki Title</label>
+            <div class="control">
+                <input class="input" type="text" name="wiki_title" value="{{index .Data.Settings "wiki_title"}}">
+            </div>
+            <p class="help">Displayed in the header and browser title</p>
+        </div>
+
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="public_read_access" value="true" {{if eq (index .Data.Settings "public_read_access") "true"}}checked{{end}}>
+                Enable public read access
+            </label>
+            <p class="help">Allow anyone to read pages without logging in</p>
+        </div>
+
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="registration_enabled" value="true" {{if eq (index .Data.Settings "registration_enabled") "true"}}checked{{end}}>
+                Enable user registration
+            </label>
+            <p class="help">Allow new users to create accounts</p>
+        </div>
+
+        <div class="field">
+            <label class="label">Registration Code</label>
+            <div class="control">
+                <input class="input" type="text" name="registration_code" value="{{index .Data.Settings "registration_code"}}">
+            </div>
+            <p class="help">If set, users must enter this code to register. Leave empty to disable.</p>
+        </div>
+
+        <hr>
+
+        <div class="field">
+            <div class="control">
+                <button type="submit" class="button is-primary">Save Settings</button>
+            </div>
+        </div>
+    </form>
+</div>
+{{end}}

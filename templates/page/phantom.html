@@ -1,0 +1,30 @@
+{{define "content"}}
+<article class="box">
+    <h1 class="title has-text-danger">{{.Data.Page.Title}}</h1>
+
+    <div class="notification is-warning is-light">
+        <p class="is-size-5">This entry hasn't been written yet.</p>
+        {{if .Data.CitedByUser}}
+        <p class="mt-2">
+            First cited by <strong>{{.Data.CitedByUser.Username}}</strong>
+            {{if .Data.CitedInPage}}
+            in <a href="/{{.Data.CitedInPage.Slug}}" class="wiki-link">{{.Data.CitedInPage.Title}}</a>
+            {{end}}
+        </p>
+        {{end}}
+    </div>
+
+    {{if .Data.CanEdit}}
+    <div class="has-text-centered mt-5">
+        <a href="/{{.Data.Page.Slug}}/edit" class="button is-primary is-large">
+            Write This Entry
+        </a>
+    </div>
+    {{else}}
+    <div class="has-text-centered mt-5">
+        <p class="has-text-grey">Log in to write this entry.</p>
+        <a href="/login?redirect=/{{.Data.Page.Slug}}/edit" class="button is-light mt-2">Login</a>
+    </div>
+    {{end}}
+</article>
+{{end}}

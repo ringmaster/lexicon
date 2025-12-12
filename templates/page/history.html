@@ -1,0 +1,49 @@
+{{define "content"}}
+<div class="box">
+    <div class="level">
+        <div class="level-left">
+            <div class="level-item">
+                <h1 class="title">History: {{.Data.Page.Title}}</h1>
+            </div>
+        </div>
+        <div class="level-right">
+            <div class="level-item">
+                <a href="/{{.Data.Page.Slug}}" class="button is-light">Back to Page</a>
+            </div>
+        </div>
+    </div>
+
+    {{if .Data.Revisions}}
+    <table class="table is-fullwidth is-striped">
+        <thead>
+            <tr>
+                <th>Revision</th>
+                <th>Author</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range $i, $rev := .Data.Revisions}}
+            <tr>
+                <td>
+                    {{if eq $i 0}}
+                    <span class="tag is-success">Current</span>
+                    {{else}}
+                    #{{$rev.ID}}
+                    {{end}}
+                </td>
+                <td>{{$rev.AuthorUsername}}</td>
+                <td>{{$rev.CreatedAt.Format "Jan 2, 2006 3:04 PM"}}</td>
+                <td>
+                    <a href="/{{$.Data.Page.Slug}}/revision/{{$rev.ID}}" class="button is-small is-light">View</a>
+                </td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+    {{else}}
+    <p class="has-text-grey">No revision history available.</p>
+    {{end}}
+</div>
+{{end}}

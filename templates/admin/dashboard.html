@@ -1,0 +1,43 @@
+{{define "content"}}
+<div class="box">
+    <h1 class="title">Admin Dashboard</h1>
+
+    <nav class="level">
+        <div class="level-item has-text-centered">
+            <div>
+                <p class="heading">Pages</p>
+                <p class="title">{{.Data.PageCount}}</p>
+            </div>
+        </div>
+        <div class="level-item has-text-centered">
+            <div>
+                <p class="heading">Phantoms</p>
+                <p class="title">{{.Data.PhantomCount}}</p>
+            </div>
+        </div>
+        <div class="level-item has-text-centered">
+            <div>
+                <p class="heading">Users</p>
+                <p class="title">{{.Data.UserCount}}</p>
+            </div>
+        </div>
+    </nav>
+
+    <hr>
+
+    <div class="columns">
+        <div class="column">
+            <a href="/admin/settings" class="button is-fullwidth is-light">Settings</a>
+        </div>
+        <div class="column">
+            <a href="/admin/users" class="button is-fullwidth is-light">User Management</a>
+        </div>
+        <div class="column">
+            <a href="/admin/deleted" class="button is-fullwidth is-light">Deleted Pages</a>
+        </div>
+        <div class="column">
+            <a href="/admin/export" class="button is-fullwidth is-info">Export Data</a>
+        </div>
+    </div>
+</div>
+{{end}}

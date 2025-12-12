@@ -1,0 +1,26 @@
+{{define "content"}}
+<div class="box">
+    <h1 class="title">Recent Changes</h1>
+
+    {{if .Data.Pages}}
+    <table class="table is-fullwidth is-striped">
+        <thead>
+            <tr>
+                <th>Page</th>
+                <th>Last Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Data.Pages}}
+            <tr>
+                <td><a href="/{{.Slug}}" class="wiki-link">{{.Title}}</a></td>
+                <td>{{.UpdatedAt.Format "Jan 2, 2006 3:04 PM"}}</td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+    {{else}}
+    <p class="has-text-grey">No recent changes.</p>
+    {{end}}
+</div>
+{{end}}

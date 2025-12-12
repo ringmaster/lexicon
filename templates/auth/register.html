@@ -1,0 +1,57 @@
+{{define "content"}}
+<div class="columns is-centered">
+    <div class="column is-5">
+        <div class="box">
+            <h1 class="title has-text-centered">Register</h1>
+
+            <form method="POST" action="/register">
+                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control">
+                        <input class="input" type="text" name="username" required autofocus pattern="[a-zA-Z0-9_]{3,50}">
+                    </div>
+                    <p class="help">3-50 alphanumeric characters or underscores</p>
+                </div>
+
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input class="input" type="password" name="password" required minlength="8">
+                    </div>
+                    <p class="help">Minimum 8 characters</p>
+                </div>
+
+                <div class="field">
+                    <label class="label">Confirm Password</label>
+                    <div class="control">
+                        <input class="input" type="password" name="confirm" required minlength="8">
+                    </div>
+                </div>
+
+                {{if .Data.RequireCode}}
+                <div class="field">
+                    <label class="label">Registration Code</label>
+                    <div class="control">
+                        <input class="input" type="text" name="code" required>
+                    </div>
+                    <p class="help">Enter the code provided by the wiki administrator</p>
+                </div>
+                {{end}}
+
+                <div class="field">
+                    <div class="control">
+                        <button type="submit" class="button is-primary is-fullwidth">Register</button>
+                    </div>
+                </div>
+            </form>
+
+            <hr>
+            <p class="has-text-centered">
+                Already have an account? <a href="/login">Login</a>
+            </p>
+        </div>
+    </div>
+</div>
+{{end}}

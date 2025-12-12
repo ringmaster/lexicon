@@ -1,0 +1,19 @@
+{{define "content"}}
+<div class="box">
+    <h1 class="title">All Pages</h1>
+
+    {{if .Data.Pages}}
+    <div class="content">
+        <ul>
+            {{range .Data.Pages}}
+            <li>
+                <a href="/{{.Slug}}" class="wiki-link">{{.Title}}</a>
+            </li>
+            {{end}}
+        </ul>
+    </div>
+    {{else}}
+    <p class="has-text-grey">No pages have been written yet.</p>
+    {{end}}
+</div>
+{{end}}

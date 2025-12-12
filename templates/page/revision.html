@@ -1,0 +1,28 @@
+{{define "content"}}
+<div class="box">
+    <div class="level">
+        <div class="level-left">
+            <div class="level-item">
+                <h1 class="title">Revision #{{.Data.Revision.ID}}: {{.Data.Page.Title}}</h1>
+            </div>
+        </div>
+        <div class="level-right">
+            <div class="level-item">
+                <a href="/{{.Data.Page.Slug}}/history" class="button is-light">Back to History</a>
+                <a href="/{{.Data.Page.Slug}}" class="button is-primary ml-2">Current Version</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification is-info is-light">
+        <p>
+            Edited by <strong>{{.Data.Revision.AuthorUsername}}</strong>
+            on {{.Data.Revision.CreatedAt.Format "January 2, 2006 at 3:04 PM"}}
+        </p>
+    </div>
+
+    <div class="content revision-content page-content">
+        {{.Data.Content | safe}}
+    </div>
+</div>
+{{end}}

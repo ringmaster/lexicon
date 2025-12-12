@@ -1,0 +1,80 @@
+{{define "content"}}
+<div class="columns">
+    <div class="column is-8">
+        {{if .Data.HomePageExists}}
+        <div class="content">
+            {{.Data.HomePageContent | safe}}
+        </div>
+        {{if .User}}
+        <p class="has-text-right">
+            <a href="/home-page/edit" class="button is-small is-light">Edit Home Page</a>
+        </p>
+        {{end}}
+        {{else}}
+        <h1 class="title">Welcome to {{.WikiTitle}}</h1>
+
+        {{if .User}}
+        <div class="notification is-info is-light">
+            <p>Create a page called <a href="/home-page/edit"><strong>home-page</strong></a> to customize this content.</p>
+        </div>
+        {{end}}
+
+        <div class="box">
+            <h2 class="subtitle">Recent Entries</h2>
+            {{if .Data.RecentPages}}
+            <div class="content">
+                <ul>
+                    {{range .Data.RecentPages}}
+                    <li>
+                        <a href="/{{.Slug}}">{{.Title}}</a>
+                        <span class="has-text-grey is-size-7">
+                            — updated {{.UpdatedAt.Format "Jan 2, 2006"}}
+                        </span>
+                    </li>
+                    {{end}}
+                </ul>
+            </div>
+            {{else}}
+            <p class="has-text-grey">No entries yet.</p>
+            {{end}}
+        </div>
+        {{end}}
+    </div>
+
+    <div class="column is-4">
+        <div class="box">
+            <h3 class="subtitle">Statistics</h3>
+            <nav class="level">
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Pages</p>
+                        <p class="title">{{.Data.PageCount}}</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading">Phantoms</p>
+                        <p class="title">{{.Data.PhantomCount}}</p>
+                    </div>
+                </div>
+            </nav>
+            {{if gt .Data.PhantomCount 0}}
+            <p class="has-text-centered">
+                <a href="/pages/phantoms" class="has-text-danger">
+                    {{.Data.PhantomCount}} entries waiting to be written
+                </a>
+            </p>
+            {{end}}
+        </div>
+
+        <div class="box">
+            <h3 class="subtitle">Quick Links</h3>
+            <div class="buttons">
+                <a href="/pages" class="button is-fullwidth is-light">All Pages</a>
+                <a href="/pages/phantoms" class="button is-fullwidth is-light">Phantom Pages</a>
+                <a href="/search" class="button is-fullwidth is-light">Search</a>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
