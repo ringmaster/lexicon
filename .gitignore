@@ -1,4 +1,20 @@
 # Super Claude Kit (generated at runtime)
 .claude/**
 CLAUDE.md
+
+# Database and runtime data
 data/
+
+# Compiled binary
+lexicon
+
+# IDE/editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
